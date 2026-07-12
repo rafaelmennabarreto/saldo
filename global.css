@@ -1,0 +1,19 @@
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css";
+
+@import "nativewind/theme";
+
+@theme {
+  --color-background: #000000;
+  --color-primary: #2563eb;
+
+  /*neutral*/
+  --color-neutral-700: #353534;
+  --color-neutral-900: #181818;
+
+  /*orange*/
+  --color-orange-200: #ffb68b;
+  --color-orange-500: #ff7a01;
+  --color-orange-950: #522300;
+}
