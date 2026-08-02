@@ -1,14 +1,11 @@
 import { AppButton } from "@components/AppButton";
 import { AppTextInput } from "@components/AppInput";
 import { Card } from "@components/Card";
-import { Dimensions, TouchableOpacity, View } from "react-native";
-import ImageBackground from "react-native-css/components/ImageBackground";
+import { Image, TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import bkg from "../../assets/screen.png"
 import { AppText } from "@components/AppText";
 import { useRouter } from "expo-router";
-
-const { height } = Dimensions.get("screen")
 
 export default function Login() {
   const router = useRouter();
@@ -19,16 +16,13 @@ export default function Login() {
 
   return (
     <View className="flex-1 items-center  bg-background">
-      <ImageBackground source={bkg}
-        style={{
-          position: "absolute",
-          height: height,
-          alignSelf: 'flex-start',
-          width: "60%",
-          top: 0,
-          right: -95,
-          opacity: 0.4
-        }} resizeMode="cover" />
+      <Image source={bkg} style={{
+        position: 'absolute',
+        right: 0,
+        width: '30%',
+        opacity: 0.5,
+      }} />
+
       <View className="bg-transparent flex-1 justify-center p-6">
         <KeyboardAwareScrollView
           contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', gap: 24 }}

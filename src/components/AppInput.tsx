@@ -9,7 +9,7 @@ type AppTextInputProps = TextInputProps & {
   type?: 'password' | 'text'
 };
 
-export function AppTextInput({ label, icon, type }: AppTextInputProps) {
+export function AppTextInput({ label, icon, type, ...rest }: AppTextInputProps) {
   const [hidePassword, setHidePassword] = useState(true);
   const useSecureTextEntry = type === 'password';
 
@@ -25,7 +25,7 @@ export function AppTextInput({ label, icon, type }: AppTextInputProps) {
 
       <View className="flex-row items-center bg-neutral-900 border border-neutral-700 rounded-t-lg mt-3 p-3">
         {icon && <MaterialDesignIcons name={icon} color="#fff" size={20} />}
-        <TextInput secureTextEntry={useSecureTextEntry && hidePassword} className="text-white flex-1 p-0 ml-2" />
+        <TextInput secureTextEntry={useSecureTextEntry && hidePassword} className="text-white flex-1 p-0 ml-2" {...rest} />
         {useSecureTextEntry && <MaterialDesignIcons onPress={togglePasswordVisibility} name={passWordIcon} color="#fff" size={20} />}
       </View>
     </View>
