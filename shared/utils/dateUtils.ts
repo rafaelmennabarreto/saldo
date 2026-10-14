@@ -37,10 +37,7 @@ export function stringToDateString(
   const monthString = getMonthString(month);
 
   const weedDay = getWeekDayString(newDateFromString(date).getDay());
-  const weekDayFormated = weedDay.slice(
-    0,
-    options.weekNameLength || weedDay.length,
-  );
+  const weekDayFormated = weedDay.slice(0, options.weekNameLength || weedDay.length);
 
   return `${weekDayFormated}, ${day} de ${monthString} de ${year}`;
 }

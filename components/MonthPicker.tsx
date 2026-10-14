@@ -1,16 +1,23 @@
-import { FlatList, View } from 'react-native'
-import { AppText } from './AppText'
-import { useEffect, useRef, useState } from 'react'
-import { getDayFromIsoString, getMonthNumber, getMonthString, getRangedMonths, getRangedYears, Month } from '../shared/utils/dateUtils'
-import { AppButton } from './AppButton';
-import { MonthPickerItem } from './MonthPickerItem';
-import { Card } from './Card';
+import { FlatList, View } from "react-native";
+import { AppText } from "./AppText";
+import { useEffect, useRef, useState } from "react";
+import {
+  getDayFromIsoString,
+  getMonthNumber,
+  getMonthString,
+  getRangedMonths,
+  getRangedYears,
+  Month,
+} from "../shared/utils/dateUtils";
+import { AppButton } from "./AppButton";
+import { MonthPickerItem } from "./MonthPickerItem";
+import { Card } from "./Card";
 
 type MonthPickerProps = {
   currentDate?: Date;
   onApply?(selectedDate: Date): void;
   onCancel?(): void;
-}
+};
 
 export function MonthPicker({ onApply, onCancel, currentDate = new Date() }: MonthPickerProps) {
   const yearsListRef = useRef<FlatList<number>>(null);
@@ -20,7 +27,9 @@ export function MonthPicker({ onApply, onCancel, currentDate = new Date() }: Mon
   const [years] = useState(getRangedYears());
 
   const [selectedYear, setSelectedYear] = useState(currentDate.getFullYear());
-  const [selectedMonth, setSelectedMonth] = useState<Month>(getMonthString(currentDate.getMonth())!);
+  const [selectedMonth, setSelectedMonth] = useState<Month>(
+    getMonthString(currentDate.getMonth())!,
+  );
 
   useEffect(() => {
     const index = years.indexOf(selectedYear);
@@ -35,7 +44,7 @@ export function MonthPicker({ onApply, onCancel, currentDate = new Date() }: Mon
         viewPosition: isFirst || isLast ? 0 : 0.5,
       });
     }
-  }, [selectedYear]);
+  }, [selectedYear, years]);
 
   useEffect(() => {
     if (!selectedMonth) return;
@@ -52,11 +61,11 @@ export function MonthPicker({ onApply, onCancel, currentDate = new Date() }: Mon
         viewPosition: isFirst || isLast ? 0 : 0.5,
       });
     }
-  }, [selectedMonth]);
+  }, [selectedMonth, months, years.length]);
 
   useEffect(() => {
-    console.log('oi');
-  }, [currentDate])
+    console.log("oi");
+  }, [currentDate]);
 
   function apply() {
     const day = getDayFromIsoString(currentDate.toISOString());
@@ -67,34 +76,51 @@ export function MonthPicker({ onApply, onCancel, currentDate = new Date() }: Mon
   }
 
   return (
-    <View className='flex-1 bg-neutral-900 rounded-lg border border-neutral-800'>
-      <View className='border-b border-neutral-800 bg-neutral-850 px-5 py-4'>
-        <AppText className='text-[16px]'> Selecionar mes e ano </AppText>
+    <View className="flex-1 rounded-lg border border-neutral-800 bg-neutral-900">
+      <View className="border-b border-neutral-800 bg-neutral-850 px-5 py-4">
+        <AppText className="text-[16px]"> Selecionar mes e ano </AppText>
       </View>
 
-      <Card className='flex-1 flex-row m-5 bg-neutral-850 border border-neutral-800'>
+      <Card className="m-5 flex-1 flex-row border border-neutral-800 bg-neutral-850">
         <View className="flex-1 px-3 py-2">
-          <AppText className='border-b border-neutral-800 mb-2 dark:text-[#94A3B8]'>Mes</AppText>
-          <MonthPickerItem data={months} ref={monthListRef} selectedItem={selectedMonth} onPress={(item) => setSelectedMonth(item)} />
+          <AppText className="mb-2 border-b border-neutral-800 dark:text-[#94A3B8]">Mes</AppText>
+          <MonthPickerItem
+            data={months}
+            ref={monthListRef}
+            selectedItem={selectedMonth}
+            onPress={(item) => setSelectedMonth(item)}
+          />
         </View>
 
         <View className="flex-1 px-3 py-2">
-          <AppText className='border-b border-neutral-800 mb-2 dark:text-[#94A3B8]'>Ano</AppText>
-          <MonthPickerItem data={years} ref={yearsListRef} selectedItem={selectedYear} onPress={(item) => setSelectedYear(item)} />
+          <AppText className="mb-2 border-b border-neutral-800 dark:text-[#94A3B8]">Ano</AppText>
+          <MonthPickerItem
+            data={years}
+            ref={yearsListRef}
+            selectedItem={selectedYear}
+            onPress={(item) => setSelectedYear(item)}
+          />
         </View>
       </Card>
 
-      <View className='gap-2 border-t border-neutral-800 bg-neutral-850 p-5'>
-        <View className='flex-row gap-2'>
-          <AppText className='dark:text-[#94A3B8]'>Periodo:</AppText>
-          <AppText className='w-[100%] font-bold'>{selectedMonth} {selectedYear} </AppText>
+      <View className="gap-2 border-t border-neutral-800 bg-neutral-850 p-5">
+        <View className="flex-row gap-2">
+          <AppText className="dark:text-[#94A3B8]">Periodo:</AppText>
+          <AppText className="w-[100%] font-bold">
+            {selectedMonth} {selectedYear}{" "}
+          </AppText>
         </View>
 
-        <View className='flex-row gap-2'>
-          <AppButton className='flex-1' variant='secondary' onPress={() => onCancel?.()} text="cancelar" />
-          <AppButton className='flex-1' onPress={apply} text="aplicar" />
+        <View className="flex-row gap-2">
+          <AppButton
+            className="flex-1"
+            variant="secondary"
+            onPress={() => onCancel?.()}
+            text="cancelar"
+          />
+          <AppButton className="flex-1" onPress={apply} text="aplicar" />
         </View>
       </View>
     </View>
-  )
+  );
 }

@@ -5,6 +5,5 @@ export default function Sobre() {
     <View>
       <Text>sobre</Text>
     </View>
-  )
-
+  );
 }

@@ -15,6 +15,5 @@ const AppState: Partial<AppStateType> = {
 export const useAppStore = create<Partial<AppStateType>>((set) => ({
   ...AppState,
   toggleTheme: (theme) => set((state) => ({ ...state, theme })),
-  toggleShowBalance: () =>
-    set((state) => ({ ...state, showBalance: !state.showBalance })),
+  toggleShowBalance: () => set((state) => ({ ...state, showBalance: !state.showBalance })),
 }));

@@ -14,7 +14,7 @@ export default function Main() {
   const [showDatePicker, setShowDatpicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
-  const { showBalance, toggleShowBalance } = useAppStore(state => state);
+  const { showBalance, toggleShowBalance } = useAppStore((state) => state);
 
   const { colorScheme } = useColorScheme();
   const colors = getColors(colorScheme);
@@ -27,32 +27,34 @@ export default function Main() {
   const selectedDateText = useMemo(() => {
     const month = getMonthString(selectedDate.getMonth());
     return `${month} de ${selectedDate.getFullYear()}`;
-  }, [selectedDate])
+  }, [selectedDate]);
 
   return (
-    <View className='flex-1 p-4 bg-neutral-900' >
+    <View className="flex-1 bg-neutral-900 p-4">
       <View className="flex-row justify-between">
         <Card className="self-start">
-          <Pressable
-            className="flex-row gap-2 items-center"
-            onPress={() => setShowDatpicker(true)}>
+          <Pressable className="flex-row items-center gap-2" onPress={() => setShowDatpicker(true)}>
             <AppText> {selectedDateText} </AppText>
-            {
-              showDatePicker
-                ? <ChevronUp color={colors.neutral0} />
-                : <ChevronDown color={colors.neutral0} />
-            }
+            {showDatePicker ? (
+              <ChevronUp color={colors.neutral0} />
+            ) : (
+              <ChevronDown color={colors.neutral0} />
+            )}
           </Pressable>
         </Card>
 
-        {
-          showBalance
-            ? <EyeOff onPress={toggleShowBalance} color={colors.neutral0} />
-            : <Eye onPress={toggleShowBalance} color={colors.neutral0} />
-        }
-      </View >
+        {showBalance ? (
+          <EyeOff onPress={toggleShowBalance} color={colors.neutral0} />
+        ) : (
+          <Eye onPress={toggleShowBalance} color={colors.neutral0} />
+        )}
+      </View>
 
-      <DatePicker visible={showDatePicker} onApply={onApplyDate} onClose={() => setShowDatpicker(false)} />
-    </View >
-  )
+      <DatePicker
+        visible={showDatePicker}
+        onApply={onApplyDate}
+        onClose={() => setShowDatpicker(false)}
+      />
+    </View>
+  );
 }
