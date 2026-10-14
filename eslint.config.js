@@ -1,5 +1,5 @@
 const expoConfig = require("eslint-config-expo/flat");
-const prettierConfig = require("eslint-config-prettier/flat");
+const prettierRecommended = require("eslint-plugin-prettier/recommended");
 const { defineConfig } = require("eslint/config");
 
 module.exports = defineConfig([
@@ -15,5 +15,5 @@ module.exports = defineConfig([
     ],
   },
   expoConfig,
-  prettierConfig,
+  prettierRecommended,
 ]);
