@@ -13,7 +13,64 @@ export type Month =
   | "Dezembro";
 
 export function getDateOnly(date: Date): string {
-  return date.toISOString().split("T")[0];
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}
+
+export function getReferenceMonth(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+
+  return `${year}-${month}`;
+}
+
+export function getMonthDateRange(referenceMonth: string): { start: string; end: string } {
+  const [year, month] = referenceMonth.split("-").map(Number);
+  const lastDay = new Date(year, month, 0).getDate();
+
+  return {
+    start: `${referenceMonth}-01`,
+    end: `${referenceMonth}-${String(lastDay).padStart(2, "0")}`,
+  };
+}
+
+export function formatDateToDisplay(date: Date): string {
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+
+  return `${day}/${month}/${date.getFullYear()}`;
+}
+
+export function getTimeString(date: Date): string {
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+
+  return `${hours}:${minutes}`;
+}
+
+export function getRelativeDayLabel(date: string): string {
+  const target = newDateFromString(date);
+  const today = new Date();
+  const yesterday = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1);
+
+  const isSameDay = (a: Date, b: Date) =>
+    a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() &&
+    a.getDate() === b.getDate();
+
+  const day = String(target.getDate()).padStart(2, "0");
+  const month = getMonthString(target.getMonth())?.slice(0, 3) ?? "";
+  const formatted = `${day} ${month}`;
+
+  if (isSameDay(target, today)) return `Hoje, ${formatted}`;
+  if (isSameDay(target, yesterday)) return `Ontem, ${formatted}`;
+
+  const weekDay = getWeekDayString(target.getDay()).slice(0, 3);
+
+  return `${weekDay}, ${formatted}`;
 }
 
 export function getDayFromIsoString(isoString: string) {
@@ -40,6 +97,13 @@ export function stringToDateString(
   const weekDayFormated = weedDay.slice(0, options.weekNameLength || weedDay.length);
 
   return `${weekDayFormated}, ${day} de ${monthString} de ${year}`;
+}
+
+export function getShortDateString(date: string): string {
+  const [, month, day] = date.split("-").map(Number);
+  const monthString = getMonthString(month - 1);
+
+  return `${String(day).padStart(2, "0")} ${monthString?.slice(0, 3) ?? ""}`.trim();
 }
 
 export function getMonthString(selectedMonth: number): Month | undefined {
