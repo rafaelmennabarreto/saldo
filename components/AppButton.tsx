@@ -33,6 +33,8 @@ export function AppButton({
 }: PropsWithChildren<AppButtonProp>) {
   return (
     <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={text}
       className={twMerge(
         "items-center justify-center rounded-lg py-3",
         variants[variant],
